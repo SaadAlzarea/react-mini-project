@@ -1,7 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import logo2 from "../assets/logo2.png";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 function Nav() {
+  const navigate = useNavigate();
+  const isValid =
+    localStorage.getItem("email") &&
+    localStorage.getItem("email") !== "" &&
+    localStorage.getItem("password") &&
+    localStorage.getItem("password") !== "";
+
+  const handleLogout = () => {
+    localStorage.removeItem("email");
+    localStorage.removeItem("password");
+    navigate("/");
+  };
   return (
     <div>
       <div>
@@ -15,17 +28,41 @@ function Nav() {
             <li className="hover:text-black">Contact</li>
             <li className="hover:text-black">Support</li>
           </ul>
-          <div className="w-80 hidden lg:flex  justify-center items-center gap-5">
-            <button className="text-lg font-medium h-12 w-25 border rounded-lg text-black hover:border-2 hover:bg-gray-500">
-              Register
-            </button>
-            <button className="text-lg font-medium h-12 w-25 border rounded-lg  text-black hover:border-2 hover:bg-gray-500">
-              Login
-            </button>
+
+          <div className="w-80 lg:flex justify-center items-center gap-5">
+            {!isValid ? (
+              <>
+                <button
+                  className="text-lg font-medium h-12 w-25 border rounded-lg text-black hover:border-2 hover:bg-gray-200 transition-all"
+                  onClick={() => {
+                    /* Your register logic */
+                  }}
+                >
+                  Register
+                </button>
+                <button
+                  className="text-lg font-medium h-12 w-25 border rounded-lg text-black hover:border-2 hover:bg-gray-200 transition-all"
+                  onClick={() => {
+                    /* Your login logic */
+                  }}
+                >
+                  Login
+                </button>
+              </>
+            ) : (
+              <button
+                className="text-lg font-medium h-12 w-25 border rounded-lg text-black hover:border-2 hover:bg-gray-200 transition-all"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            )}
           </div>
-           <div>
-             <p className="text-2xl text-black lg:hidden flex w-40  justify-center items-center"><RxHamburgerMenu /></p>
-           </div>
+          <div>
+            <p className="text-2xl text-black lg:hidden flex w-40  justify-center items-center">
+              <RxHamburgerMenu />
+            </p>
+          </div>
         </nav>
       </div>
     </div>

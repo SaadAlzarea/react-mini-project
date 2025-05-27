@@ -1,17 +1,20 @@
 import { isValidElement, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [fname, setFname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [conPassword, setConPassword] = useState("");
-
+    const navigate = useNavigate();
   let isValid = true;
 
   function register() {
     if (fname == "") {
       isValid = false;
       let fnameError = "name is required";
+      console.log("invalid name");
+      
     } else if (fname.length < 5) {
       isValid = false;
       let fnameError = "name is shorter than 5";
@@ -20,31 +23,48 @@ function Register() {
     if (email == "") {
       isValid = false;
       let emailError = "name is required";
-    } else if (email.includes("@") && email.includes(".")) {
+      console.log("invalid email");
+
+    } else if (!email.includes("@") && !email.includes(".")) {
       isValid = false;
       let emailError = "email is not contain @ and .";
+      console.log("invalid email");
+
     }
 
     if (password == "") {
       isValid = false;
       let passwordError = "name is required";
+      console.log("invalid password");
+
     } else if (password.length <= 8) {
       isValid = false;
       let passwordError = "password is shorter than 8";
+      console.log("invalid password");
+
     }
 
     if (conPassword == "") {
       isValid = false;
       let conPasswordError = "name is required";
+      console.log("invalid confirm password");
+
     } else if (password !== conPassword) {
       isValid = false;
       let conPasswordError = "password and confirm password is not match";
+      console.log("invalid confirm password");
+
     }
 
     localStorage.setItem("full name", fname);
     localStorage.setItem("email", email);
     localStorage.setItem("password", password);
     localStorage.setItem("confirm password", conPassword);
+
+
+    if(isValid == true){
+      navigate("/login");
+    }
   }
   return (
     <div className="h-screen">
